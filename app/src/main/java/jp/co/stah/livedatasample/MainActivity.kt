@@ -1,5 +1,6 @@
 package jp.co.stah.livedatasample
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -8,14 +9,38 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.*
 
 
-class MainActivity : AppCompatActivity() {
+
+
+class MainActivity : AppCompatActivity(), MainFragment.OnFragmentInteractionListener {
+    override fun onFragmentInteraction(uri: Uri) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         val l = lifecycle
 
         println("onCreate : ${l.currentState.name}")
+
+        val viewModel1 = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        val viewModel2 = ViewModelProviders.of(this).get(MainViewModel::class.java)
+
+        println("1 ${viewModel1.hashCode()}")
+        println("2 ${viewModel2.hashCode()}")
+
+        if(savedInstanceState == null){
+            supportFragmentManager.beginTransaction()
+                .add(MainFragment(), "")
+                .commit()
+        }
+
+
+    }
+
+    fun lifecycle(){
+        val l = lifecycle
 
         val toggleLD = MainLiveData()
         val toggle = findViewById<ToggleButton>(R.id.toggleButton)
@@ -73,5 +98,6 @@ class MainActivity : AppCompatActivity() {
 
         }
         l.addObserver(observer)
+
     }
 }
