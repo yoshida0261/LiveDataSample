@@ -7,8 +7,7 @@ import android.widget.Button
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.*
-
-
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity(), MainFragment.OnFragmentInteractionListener {
@@ -16,19 +15,36 @@ class MainActivity : AppCompatActivity(), MainFragment.OnFragmentInteractionList
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    private val liveData = MutableLiveData<Int>().apply { value = 0 }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
 
         val l = lifecycle
 
         println("onCreate : ${l.currentState.name}")
 
+        button.setOnClickListener {
+            val count = liveData.value
+        }
+
+        liveData.observe(this, Observer { println("count = $it") })
+
         val viewModel1 = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        val viewModel2 = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        //val viewModel2 = ViewModelProviders.of(this).get(MainViewModel::class.java)
+
+        viewModel1.countUpLiveData.observe(this, Observer {
+            println("count up $it")
+        })
+
+        viewModel1.livedata.observe(this, Observer { println("count = $it") })
+
 
         println("1 ${viewModel1.hashCode()}")
-        println("2 ${viewModel2.hashCode()}")
+        //println("2 ${viewModel2.hashCode()}")
 
         if(savedInstanceState == null){
             supportFragmentManager.beginTransaction()

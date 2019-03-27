@@ -10,6 +10,7 @@ class MyApp : Application() {
         super.onCreate()
 
 
+
         val observer = object : LifecycleObserver {
 
             @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
