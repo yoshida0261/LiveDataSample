@@ -35,7 +35,6 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
 
-    implementation 'com.google.firebase:firebase-core:16.0.8'
 
     def lifecycle = "2.0.0"
 
@@ -44,4 +43,3 @@ dependencies {
     testImplementation "androidx.arch.core:core-testing:$lifecycle"
 }
 
-apply plugin: 'com.google.gms.google-services'
